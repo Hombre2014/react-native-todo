@@ -1,27 +1,27 @@
 const express = require('express');
 require('dotenv').config();
 require('./models/db');
+const userRouter = require('./routes/user');
 
 const app = express();
-const User = require('./models/user');
 
-const email = 'john@email.com';
+// For Reference instead of using app.use(express.json());
+// app.use((req, res, next) => {
+//   req.on('data', chunk => {
+//     const data = JSON.parse(chunk);
+//     req.body = data;
+//     next();
+//   });
+// });
 
-app.post('/create-user', async (req, res) => {
-  const isNewUser = await User.isThisEmailInUse(email);
-  if (!isNewUser) return res.json({
-    success: false,
-    message: 'This email is already in use!',
-  });
+app.use(express.json());
+app.use(userRouter);
 
-  const user = await User({
-    fullName: 'John Doe',
-    email: email,
-    password: '123456',
-  });
-  await user.save();
-  res.json(user);
+app.get('/test', (req, res) => {
+  res.send('Hello World');
 });
+
+const User = require('./models/user');
 
 app.get('/', (req, res) => {
   res.send('Hello World');
