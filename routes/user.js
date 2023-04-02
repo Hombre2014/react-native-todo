@@ -7,8 +7,12 @@ const {
   userValidation,
   validateUserSignIn,
 } = require('../middleware/validation/user');
+const { isAuth } = require('../middleware/auth');
 
 router.post('/create-user', validateUserSignUp, userValidation, createUser);
 router.post('/sign-in', validateUserSignIn, userValidation, userSignIn);
+router.post('/create-post', isAuth, (req, res) => {
+  res.send('create post');
+});
 
 module.exports = router;
