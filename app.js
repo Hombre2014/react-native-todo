@@ -21,8 +21,8 @@ app.use(userRouter);
 
 const test = async (email, password) => {
   const user = await User.findOne({ email: email });
-  const result = await user.comparePassword(password);
-  console.log(result);
+  // const result = await user.comparePassword(password);
+  // console.log(result);
 }
 
 test('yuriy15@hombre.com', '123456');
@@ -32,7 +32,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  res.json({ success: true, message: 'Hello World' });
 });
 
 app.listen(8000, () => {
