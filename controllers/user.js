@@ -37,7 +37,13 @@ exports.userSignIn = async (req, res) => {
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-  res.json({ success: true, user, token });
+  const userInfo = {
+    fullName: user.fullName,
+    email: user.email,
+    avatar: user.avatar ? user.avatar : '',
+  }
+
+  res.json({ success: true, user: userInfo, token });
 };
 
 exports.uploadProfile = async (req, res) => {
